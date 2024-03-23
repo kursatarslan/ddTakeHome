@@ -72,6 +72,25 @@ bash
 ```bash
 dotnet test
 ```
+
+## Coverage Report 
+[coverlet]
+Calculating coverage result...
+Generating report 
+
+Coverage Report
+
+| Module      | Line   | Branch | Method |
+|-------------|-------:|-------:|-------:|
+| name-sorter | 55.17% | 62.5%  | 90.9%  |
+
+|         | Line   | Branch | Method |
+|---------|-------:|-------:|-------:|
+| Total   | 55.17% | 62.5%  | 90.9%  |
+| Average | 55.17% | 62.5%  | 90.9%  |
+
+
+
 ## Dependencies
 This project uses .NET Core and requires no additional dependencies.
 
