@@ -2,16 +2,10 @@
 
 namespace name_sorter;
 
-public class User
+public class User(string lastName, IEnumerable<string> givenNames)
 {
-    public string LastName { get; }
-    public IReadOnlyList<string> GivenNames { get; }
-
-    public User(string lastName, IReadOnlyList<string> givenNames)
-    {
-        LastName = lastName;
-        GivenNames = givenNames;
-    }
+    public string LastName { get; } = lastName;
+    public IEnumerable<string> GivenNames { get; } = givenNames;
 
     public override string ToString()
     {
@@ -19,25 +13,20 @@ public class User
     }
 }
 
-public class NameSorter
+public class NameSorter(StreamReader reader)
 {
-    private readonly StreamReader _reader;
-
-    public NameSorter(StreamReader reader)
-    {
-        _reader = reader;
-    }
     public async Task SortAndPrintUsersAsync(string filePath)
     {
         if (string.IsNullOrEmpty(filePath))
         {
             throw new ArgumentNullException(nameof(filePath));
         }
+
         try
         {
             var users = new ConcurrentBag<User>();
             var tasks = new List<Task>();
-            while (await _reader.ReadLineAsync() is { } line)
+            while (await reader.ReadLineAsync() is { } line)
             {
                 var lineCopy = line;
                 tasks.Add(Task.Run(() =>
@@ -67,7 +56,6 @@ public class NameSorter
     }
 }
 
-
 public static class Program
 {
     public static async Task Main(string[] args)
@@ -77,7 +65,8 @@ public static class Program
             Console.WriteLine("Usage: name-sorter <file-path>");
             return;
         }
-        string filePath = args[0];
+
+        var filePath = args[0];
 
         try
         {
